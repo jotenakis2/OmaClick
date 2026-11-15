@@ -2,26 +2,26 @@
 
 Screenshots and demo media for OmaClick live here.
 
-## Placeholder
+## Preview
 
-No preview has been captured yet. To add one for the marketplace listing and the
-README, capture the menu with the desktop visible behind it:
+The marketplace and README show `preview.png` **in the repository root** (next to
+`manifest.json`), so the canonical copy lives there. A copy is not kept in this
+folder to avoid two files drifting apart.
 
-```sh
-# 1. open the menu with a right-click, then, within the capture delay:
-omarchy-capture-region
-```
+To refresh it after a UI change:
 
-Save it as `preview.png` **in the repository root** (the marketplace picks up a
-`preview.png` sitting next to `manifest.json`), and optionally keep a copy here
-for the README:
+1. Right-click an empty desktop to open the menu.
+2. Capture the menu together with the wallpaper behind it (region capture is
+   fine — a tight crop around the card keeps the file small):
 
-```markdown
-![OmaClick context menu](assets/preview.png)
-```
+   ```sh
+   omarchy-capture-region
+   ```
 
-Guidelines: PNG, roughly 16:9, under 1 MB, no personal files or window titles
-visible.
+3. Save/overwrite `preview.png` in the repository root.
+
+Guidelines: PNG, roughly 16:9 if you capture the whole screen, under 1 MB, no
+personal files or window titles visible.
 
 ## Demo
 

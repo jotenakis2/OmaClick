@@ -14,6 +14,8 @@ like part of the shell rather than a bolt-on.
 [![Omarchy compatible](https://img.shields.io/badge/Omarchy-Quattro-1f6feb.svg)](https://omarchy.org)
 [![Release](https://img.shields.io/github/v/release/shayanshahravi/OmaClick?color=green)](https://github.com/shayanshahravi/OmaClick/releases)
 
+![The OmaClick context menu open on an empty desktop](preview.png)
+
 ## Features
 
 - **Right-click anywhere on the desktop** to open a context menu at the pointer.

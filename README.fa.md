@@ -14,6 +14,8 @@
 [![Omarchy compatible](https://img.shields.io/badge/Omarchy-Quattro-1f6feb.svg)](https://omarchy.org)
 [![Release](https://img.shields.io/github/v/release/shayanshahravi/OmaClick?color=green)](https://github.com/shayanshahravi/OmaClick/releases)
 
+![منوی راست‌کلیک OmaClick روی دسکتاپ خالی](preview.png)
+
 ## ویژگی‌ها
 
 - **راست‌کلیک روی هر جای دسکتاپ** منو را دقیقاً زیر نشانگر ماوس باز می‌کند.
