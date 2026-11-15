@@ -1,0 +1,17 @@
+# Backups made by install.sh / uninstall.sh
+*.bak
+*.bak.*
+*.wasreset.*
+
+# Secrets — never commit credentials or tokens
+.env
+.env.*
+*.token
+*.pem
+
+# Local scratch
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+node_modules/

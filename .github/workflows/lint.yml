@@ -1,0 +1,100 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y shellcheck
+
+      - name: Lint every shell script
+        run: |
+          set -euo pipefail
+          mapfile -t scripts < <(find . -type f -name '*.sh' -not -path './.git/*')
+          if [ "${#scripts[@]}" -eq 0 ]; then
+            echo "no shell scripts found"
+            exit 1
+          fi
+          printf 'checking %d script(s)\n' "${#scripts[@]}"
+          shellcheck --severity=warning --shell=bash "${scripts[@]}"
+
+  metadata:
+    name: Manifest and syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON and YAML syntax
+        run: |
+          set -euo pipefail
+          jq -e . manifest.json > /dev/null
+          python3 -c "import yaml, sys; [yaml.safe_load(open(f)) for f in sys.argv[1:]]" \
+            .github/workflows/lint.yml
+
+      - name: Check the plugin manifest contract
+        run: |
+          python3 <<'PY'
+          import json, pathlib, re, sys
+
+          root = pathlib.Path(".")
+          manifest = json.loads((root / "manifest.json").read_text())
+          problems = []
+
+          for field in ("schemaVersion", "id", "name", "version", "kinds", "entryPoints"):
+              if field not in manifest:
+                  problems.append(f"missing required field: {field}")
+
+          if manifest.get("schemaVersion") != 1:
+              problems.append("schemaVersion must be the number 1")
+
+          plugin_id = str(manifest.get("id", ""))
+          if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", plugin_id or ""):
+              problems.append(f"invalid plugin id: {plugin_id!r}")
+          if plugin_id.startswith("omarchy."):
+              problems.append("plugin id may not use the reserved omarchy.* namespace")
+          if ".." in plugin_id:
+              problems.append("plugin id may not contain '..'")
+
+          kinds = manifest.get("kinds") or []
+          if not isinstance(kinds, list) or not kinds:
+              problems.append("kinds must be a non-empty array")
+
+          entry_points = manifest.get("entryPoints") or {}
+          if not isinstance(entry_points, dict):
+              problems.append("entryPoints must be an object")
+          required = {"bar": "bar", "bar-widget": "barWidget", "menu": "menu",
+                      "overlay": "overlay", "panel": "panel", "service": "service"}
+          for kind in kinds:
+              key = required.get(kind)
+              if key and key not in entry_points:
+                  problems.append(f"kind {kind!r} needs entryPoints.{key}")
+          for key, path in entry_points.items():
+              text = str(path)
+              if not text or text.startswith("/") or ".." in text or "\n" in text:
+                  problems.append(f"entryPoints.{key} must be a safe relative path")
+                  continue
+              if not (root / text).is_file():
+                  problems.append(f"entryPoints.{key} file not found: {text}")
+
+          links = [str(p) for p in root.rglob("*") if p.is_symlink() and ".git" not in p.parts]
+          if links:
+              problems.append("symlinks are not allowed inside a plugin folder: " + ", ".join(links))
+
+          for problem in problems:
+              print(f"::error::{problem}")
+          sys.exit(1 if problems else 0)
+          PY
