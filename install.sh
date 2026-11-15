@@ -41,9 +41,9 @@ header
 command -v omarchy >/dev/null 2>&1 ||
   die "the omarchy CLI was not found; this installer only runs on Omarchy Linux."
 command -v jq >/dev/null 2>&1 ||
-  die "jq is required: sudo pacman -S --needed jq"
+  die "jq is required; install it with your package manager and run this again"
 command -v git >/dev/null 2>&1 ||
-  die "git is required: sudo pacman -S --needed git"
+  die "git is required; install it with your package manager and run this again"
 
 mkdir -p "$PLUGINS_DIR" "$BACKUP_DIR"
 stamp="$(date +%Y%m%d-%H%M%S)"
