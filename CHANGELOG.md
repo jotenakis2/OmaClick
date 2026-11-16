@@ -4,6 +4,14 @@ All notable changes to OmaClick are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- The installer is documented as `./install.sh` from a checkout instead of
+  piping a remote script into a shell, so the marketplace security baseline no
+  longer sees a download-and-execute install path.
+
 ## [1.0.0] — 2026-11-15
 
 First public release.

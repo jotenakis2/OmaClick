@@ -6,7 +6,7 @@
 # The pre-plugin copy of the menu ($LEGACY_ID) is backed up before it is
 # retired, so two surfaces never fight over the same right-click.
 #
-#   curl -fsSL https://raw.githubusercontent.com/shayanshahravi/OmaClick/main/install.sh | bash
+#   ./install.sh
 set -euo pipefail
 
 PLUGIN_ID="io.github.shayanshahravi.omaclick"

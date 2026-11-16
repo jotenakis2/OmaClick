@@ -58,11 +58,13 @@ With the Omarchy plugin manager:
 omarchy plugin add https://github.com/shayanshahravi/OmaClick.git --enable
 ```
 
-Or with the installer, which also retires an older hand-installed copy of the
-menu (see below):
+Or from a checkout, using the installer, which also retires an older
+hand-installed copy of the menu (see below):
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/shayanshahravi/OmaClick/main/install.sh | bash
+git clone https://github.com/shayanshahravi/OmaClick.git
+cd OmaClick
+./install.sh
 ```
 
 Either way the plugin lands in

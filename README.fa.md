@@ -58,10 +58,12 @@
 omarchy plugin add https://github.com/shayanshahravi/OmaClick.git --enable
 ```
 
-یا با اسکریپت نصب، که نسخه‌ی دستیِ قبلی منو را هم بازنشسته می‌کند:
+یا از داخل مخزن با اسکریپت نصب، که نسخه‌ی دستیِ قبلی منو را هم بازنشسته می‌کند:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/shayanshahravi/OmaClick/main/install.sh | bash
+git clone https://github.com/shayanshahravi/OmaClick.git
+cd OmaClick
+./install.sh
 ```
 
 در هر دو حالت پلاگین در مسیر
