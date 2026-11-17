@@ -1,12 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "io.github.shayanshahravi.omaclick",
+  "id": "io.github.jotenakis2.omaclick",
   "name": "OmaClick",
-  "version": "1.0.0",
-  "author": "Shayan Shahravi",
+  "version": "1.1.0",
+  "author": "Shayan Shahravi; fork maintained by jotenakis2",
   "license": "MIT",
-  "homepage": "https://github.com/shayanshahravi/OmaClick",
-  "description": "Windows-style right-click context menu on the Omarchy desktop: terminal, files, wallpaper, theme, settings and lock screen. Double-clicking the wallpaper still switches it.",
+  "homepage": "https://github.com/jotenakis2/OmaClick",
+  "description": "Windows-style right-click context menu on the Omarchy desktop: terminal, files, wallpaper, theme, settings and lock screen, in the Omarchy language and font. Double-clicking the wallpaper still switches it.",
   "kinds": ["service"],
-  "entryPoints": { "service": "Service.qml" }
+  "entryPoints": { "service": "Service.qml" },
+  "omarchy": { "clonedFrom": "io.github.shayanshahravi.omaclick" }
 }

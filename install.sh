@@ -9,8 +9,9 @@
 #   ./install.sh
 set -euo pipefail
 
-PLUGIN_ID="io.github.shayanshahravi.omaclick"
-REPO_URL="${OMACLICK_REPO_URL:-https://github.com/shayanshahravi/OmaClick.git}"
+PLUGIN_ID="io.github.jotenakis2.omaclick"
+REPO_URL="${OMACLICK_REPO_URL:-https://github.com/jotenakis2/OmaClick.git}"
+UPSTREAM_ID="${OMACLICK_UPSTREAM_ID:-io.github.shayanshahravi.omaclick}"
 LEGACY_ID="${OMACLICK_LEGACY_ID:-local.desktop-menu}"
 PLUGINS_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/plugins"
 BACKUP_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/omaclick/backups"
@@ -67,7 +68,18 @@ if [[ -d $PLUGINS_DIR/$LEGACY_ID ]]; then
   fi
 fi
 
-# 2. Install or update OmaClick itself.
+# 2. Retire the upstream plugin: two enabled copies would each open a menu on
+#    the same right-click.
+if is_known "$UPSTREAM_ID" &&
+  known_ids | jq -e --arg id "$UPSTREAM_ID" 'any(.[]; .id == $id and .enabled == true)' >/dev/null 2>&1; then
+  if omarchy plugin disable "$UPSTREAM_ID" >/dev/null 2>&1; then
+    ok "disabled upstream $UPSTREAM_ID (bring it back with: omarchy plugin enable $UPSTREAM_ID)"
+  else
+    warn "could not disable $UPSTREAM_ID — two menus may open on the same click"
+  fi
+fi
+
+# 3. Install or update OmaClick itself.
 if is_known "$PLUGIN_ID"; then
   say "OmaClick is already installed — updating it."
   omarchy plugin update "$PLUGIN_ID" --yes
@@ -76,7 +88,7 @@ else
   omarchy plugin add "$REPO_URL" --enable --yes
 fi
 
-# 3. Make sure it is enabled and the running shell knows about it.
+# 4. Make sure it is enabled and the running shell knows about it.
 if ! known_ids | jq -e --arg id "$PLUGIN_ID" 'any(.[]; .id == $id and .enabled == true)' >/dev/null 2>&1; then
   omarchy plugin enable "$PLUGIN_ID"
   ok "enabled $PLUGIN_ID"

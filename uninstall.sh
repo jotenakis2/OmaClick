@@ -7,7 +7,7 @@
 # Safe to run more than once.
 set -euo pipefail
 
-PLUGIN_ID="io.github.shayanshahravi.omaclick"
+PLUGIN_ID="io.github.jotenakis2.omaclick"
 LEGACY_ID="${OMACLICK_LEGACY_ID:-local.desktop-menu}"
 PLUGINS_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/plugins"
 BACKUP_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/omaclick/backups"

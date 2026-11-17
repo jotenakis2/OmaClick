@@ -5,6 +5,7 @@ import Quickshell.Hyprland
 import Quickshell.Wayland
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 import "config/MenuEntries.js" as MenuEntries
 
@@ -25,15 +26,31 @@ Item {
   property real menuX: 0
   property real menuY: 0
 
-  readonly property int rowHeight: 32
-  readonly property int separatorHeight: 9
-  readonly property int cardWidth: 236
+  // Row metrics follow Omarchy's own type scale, so a larger
+  // `omarchy display text size` grows the menu instead of clipping it.
+  readonly property real textScale: Math.max(1, Style.fontScale)
+  readonly property int rowHeight: Math.round(32 * textScale)
+  readonly property int separatorHeight: Math.round(9 * textScale)
+  readonly property int cardWidth: Math.round(236 * textScale)
   readonly property var entries: MenuEntries.entries
   readonly property int cardHeight: {
     var height = 12
     for (var i = 0; i < entries.length; i++)
       height += entries[i].separator ? separatorHeight : rowHeight
     return height
+  }
+
+  // Plugin-owned catalogs in i18n/, following the language picked under
+  // Setup > Language. Entries without a `key` keep their literal label.
+  Commons.Translations {
+    id: strings
+    directory: Qt.resolvedUrl("i18n")
+  }
+
+  function entryLabel(entry) {
+    if (!entry) return ""
+    if (entry.key) return strings.t(String(entry.key), String(entry.label || entry.key))
+    return String(entry.label || "")
   }
 
   function openMenu(screen, x, y) {
@@ -186,10 +203,13 @@ Item {
                 anchors.rightMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
                 visible: !row.separator
-                text: row.separator ? "" : String(row.entry.label || "")
+                text: row.separator ? "" : root.entryLabel(row.entry)
                 elide: Text.ElideRight
                 textFormat: Text.PlainText
-                font.family: "Liberation Sans"
+                // Draw with the family Omarchy renders with (`omarchy font
+                // set`), honoring OMARCHY_MENU_FONT like the shell's own
+                // popups, instead of a hard-coded family.
+                font.family: Style.font.menuFamily
                 font.pixelSize: Style.font.body
                 color: row.hovered ? Color.popups.background : Color.popups.text
               }

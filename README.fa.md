@@ -10,9 +10,9 @@
 یک چیز چسبانده‌شده.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Lint](https://github.com/shayanshahravi/OmaClick/actions/workflows/lint.yml/badge.svg)](https://github.com/shayanshahravi/OmaClick/actions/workflows/lint.yml)
+[![Lint](https://github.com/jotenakis2/OmaClick/actions/workflows/lint.yml/badge.svg)](https://github.com/jotenakis2/OmaClick/actions/workflows/lint.yml)
 [![Omarchy compatible](https://img.shields.io/badge/Omarchy-Quattro-1f6feb.svg)](https://omarchy.org)
-[![Release](https://img.shields.io/github/v/release/shayanshahravi/OmaClick?color=green)](https://github.com/shayanshahravi/OmaClick/releases)
+[![Release](https://img.shields.io/github/v/release/jotenakis2/OmaClick?color=green)](https://github.com/jotenakis2/OmaClick/releases)
 
 ![منوی راست‌کلیک OmaClick روی دسکتاپ خالی](preview.png)
 
@@ -55,19 +55,19 @@
 با مدیر پلاگین Omarchy:
 
 ```sh
-omarchy plugin add https://github.com/shayanshahravi/OmaClick.git --enable
+omarchy plugin add https://github.com/jotenakis2/OmaClick.git --enable
 ```
 
 یا از داخل مخزن با اسکریپت نصب، که نسخه‌ی دستیِ قبلی منو را هم بازنشسته می‌کند:
 
 ```sh
-git clone https://github.com/shayanshahravi/OmaClick.git
+git clone https://github.com/jotenakis2/OmaClick.git
 cd OmaClick
 ./install.sh
 ```
 
 در هر دو حالت پلاگین در مسیر
-`~/.config/omarchy/plugins/io.github.shayanshahravi.omaclick/` نصب و بلافاصله
+`~/.config/omarchy/plugins/io.github.jotenakis2.omaclick/` نصب و بلافاصله
 فعال می‌شود. نیازی به ری‌استارت شل نیست؛ روی دسکتاپ راست‌کلیک کنید.
 
 ## استفاده
@@ -83,7 +83,7 @@ cd OmaClick
 فایل `config/MenuEntries.js` داخل پلاگین نصب‌شده را ویرایش کنید:
 
 ```sh
-$EDITOR ~/.config/omarchy/plugins/io.github.shayanshahravi.omaclick/config/MenuEntries.js
+$EDITOR ~/.config/omarchy/plugins/io.github.jotenakis2.omaclick/config/MenuEntries.js
 ```
 
 هر ردیف یا یک دستور است یا یک جداکننده:
@@ -108,7 +108,7 @@ omarchy-shell shell rescanPlugins
 ## حذف نصب
 
 ```sh
-omarchy plugin remove io.github.shayanshahravi.omaclick
+omarchy plugin remove io.github.jotenakis2.omaclick
 ```
 
 یا برای برگرداندن منوی دستیِ قبلی که `install.sh` بازنشسته کرده بود:
